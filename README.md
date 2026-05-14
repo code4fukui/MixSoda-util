@@ -1,32 +1,36 @@
 # MixSoda-util
 
-utilities for [MixSoda](https://mixsoda.shizentai.jp/)
+> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
 
-## backup yesterday data
+Utilities for [MixSoda](https://mixsoda.shizentai.jp/).
 
+## Features
+- Backup daily data for MixSoda
+- Generate a comprehensive backup file (`all.csv`) for each ICCID
+
+## Usage
+
+### Backup yesterday's data
 ```sh
 deno run -A https://code4fukui.github.io/MixSoda-util/backup.js [Store Token] (all)
 ```
+This will create the daily backup files in the `data/` directory.
 
-to make iccid/all.csv
+### Generate `all.csv` files
 ```sh
 deno run -A https://code4fukui.github.io/MixSoda-util/makeBackupAll.js
 ```
+This will generate an `all.csv` file for each ICCID, containing all the data.
 
-### setup
-
-```sh
-mkdir .github
-mkdir .github/workflows
-cat > .github/workflows/scheduled-backup.yml
-```
+### Set up scheduled backups
+Create a GitHub Actions workflow file `.github/workflows/scheduled-backup.yml` with the following content:
 
 ```yml
 name: Scheduled 
 
 on:
   schedule:
-    # 1:31分に実行 1(JST)-9+24=16(UTC)
+    # Run at 1:31 AM JST (16:31 UTC)
     - cron: '31 16 * * *'
 
 jobs:
@@ -52,5 +56,7 @@ jobs:
           git push
 ```
 
-set secret code ([Encrypted secrets - GitHub Docs](https://docs.github.com/en/actions/security-guides/encrypted-secrets))
+Remember to set the `SECRET_TOKEN` secret in your GitHub repository settings.
 
+## License
+MIT License — see [LICENSE](LICENSE).
